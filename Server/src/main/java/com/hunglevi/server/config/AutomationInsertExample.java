@@ -19,6 +19,7 @@ public class AutomationInsertExample implements ApplicationListener<ContextRefre
     @Autowired
     public UserRepository userRepository;
 
+    @Autowired
     public PasswordEncoder passwordEncoder;
 
     @Override

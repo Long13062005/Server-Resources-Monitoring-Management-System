@@ -16,6 +16,7 @@ public class MessengerRes {
     private String token;
     private String refreshToken;
     private String expirationTime;
+    private String rolesName;
     private Users user;
     private Roles roles;
 }
