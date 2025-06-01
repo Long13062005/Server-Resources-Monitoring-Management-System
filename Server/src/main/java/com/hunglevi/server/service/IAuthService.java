@@ -10,7 +10,8 @@ public interface IAuthService {
 
     MessengerRes login(AuthReq loginRequest);
 
-    MessengerRes refreshToken(AuthReq refreshTokenReqiest);
+    MessengerRes refreshToken(String refreshTokenReqiest);
+    MessengerRes getMyInfo(String username);
 
 
     MessengerRes logout(AuthReq logoutRequest);
