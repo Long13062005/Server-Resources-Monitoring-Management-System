@@ -1,6 +1,7 @@
 package com.hunglevi.server.config;
 
 import com.hunglevi.server.service.JpaUserDetailsService;
+import com.hunglevi.server.service.impl.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,18 +27,24 @@ public class SecurityConfig {
     private JpaUserDetailsService detailsService;
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/public/**", "/api/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority( "ADMIN")
+                        .requestMatchers("/admin/**", "/swagger-ui/**", "/v3/api-docs/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/adminuser/**").hasAnyAuthority( "ADMIN", "USER")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService))
                 );
         return httpSecurity.build();
     }

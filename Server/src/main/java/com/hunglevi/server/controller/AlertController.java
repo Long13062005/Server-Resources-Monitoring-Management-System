@@ -18,7 +18,7 @@ public class AlertController {
     private AlertService alertService;
 
     @GetMapping
-    public ResponseEntity<?> getAllMonitorings(
+    public ResponseEntity<?> getAllAlert(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "4") int size
     ) {
@@ -70,6 +70,11 @@ public class AlertController {
         } catch (Exception e) {
             return new ResponseEntity<>("An error occurred while deleting the alert", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/test-alert")
+    public ResponseEntity<String> testAlert() {
+        alertService.sendAlert("🚨 Test Alert", "This is a test email from your monitoring system.");
+        return ResponseEntity.ok("Test email sent.");
     }
 
 }
