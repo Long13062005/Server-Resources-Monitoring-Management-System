@@ -13,4 +13,6 @@ public interface IAlertsService {
     Alerts findAlertById(Long id);
     Alerts saveAlert(Alerts alert);
     void deleteAlert(Long id);
+
+    void sendAlert(String subject, String content);
 }

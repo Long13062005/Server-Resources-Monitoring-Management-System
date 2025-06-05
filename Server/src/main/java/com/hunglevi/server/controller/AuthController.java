@@ -47,16 +47,18 @@ public class AuthController {
 //    }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<MessengerRes> login(@RequestBody AuthReq loginRequest, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody AuthReq loginRequest, HttpServletResponse response) {
         MessengerRes result = authService.login(loginRequest);
+        result.setMessage("Login successful");
         System.out.println("refreshToken: " + result.getRefreshToken());
         Cookie refreshTokenCookie = new Cookie("refreshToken", result.getRefreshToken());
+        Cookie rolesName = new Cookie("rolesName", result.getRolesName());
         refreshTokenCookie.setHttpOnly(true); // Ensure cookie is HTTP-only
         refreshTokenCookie.setPath("/");
-
         refreshTokenCookie.setMaxAge(30 * 60); // Set an appropriate max age (30M in this example)
         response.addCookie(refreshTokenCookie);
-        return ResponseEntity.ok(result);
+        response.addCookie(rolesName);
+        return ResponseEntity.ok(result.getMessage());
     }
 
     @GetMapping("/auth/refresh")

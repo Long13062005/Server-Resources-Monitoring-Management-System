@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+//    OAuth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     // JPA & DB Driver
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql:42.7.2' // Hoặc thay bằng mysql:mysql-connector-java nếu dùng MySQL
@@ -54,6 +56,9 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+//    gmail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 tasks.named('test') {

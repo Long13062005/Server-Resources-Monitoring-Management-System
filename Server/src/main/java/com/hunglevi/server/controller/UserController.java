@@ -9,7 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Tag(name = "User", description = "CRUD người dùng")
 @RestController
@@ -76,5 +79,9 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("An error occurred while deleting the user");
         }
+    }
+    @GetMapping("/me")
+    public Map<String, Object> getUserInfo(@org.springframework.security.core.annotation.AuthenticationPrincipal OAuth2User principal) {
+        return principal.getAttributes();
     }
 }
