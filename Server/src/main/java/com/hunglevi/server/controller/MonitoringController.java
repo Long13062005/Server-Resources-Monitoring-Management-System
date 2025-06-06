@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/monitoring")
+@RequestMapping("/api/metrics")
 @CrossOrigin
 public class MonitoringController {
     @Autowired
@@ -43,7 +43,7 @@ public class MonitoringController {
             return new ResponseEntity<>("Monitoring not found with id: " + id, HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<?> createMonitoring(@RequestBody Monitoring monitoring) {
         try {
             Monitoring saveMonitoring = monitoringService.saveMonitoring(monitoring);
